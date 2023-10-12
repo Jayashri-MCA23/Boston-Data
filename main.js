@@ -1,30 +1,22 @@
 import { boston } from "./boston.js";
-var bostondata=boston.data;
-var ele="";
- 
-for(let i=0;i<bostondata.length;i++){
-    for(let j=i+1;j<bostondata.length;j++){
-        if(bostondata[i][11]<bostondata[j][11]){
-            let temp=bostondata[i];
-            bostondata[i]=bostondata[j];
-            bostondata[j]=temp;
-        }
-        
-    }
-   
 
-}
- var data=bostondata.slice(0,5);
- for(let i=0;i<5;i++){
-ele+="<h2>" +
-data[i][8] +
-"</h2>" +
-"<h3>" +
-data[i][11] +
-"</h3>";
- }
+const bostondata = boston.data;
 
+// Sort the data by salary (assuming salary is in the 11th column)
+bostondata.sort((a, b) => b[11] - a[11]);
 
+const topFiveEarners = bostondata.slice(0, 5);
 
-document.getElementById("app").innerHTML="<ul>"+ele+"</ul>";
+const appElement = document.getElementById("app");
+const ulElement = document.createElement("ul");
 
+topFiveEarners.forEach(person => {
+    const liElement = document.createElement("li");
+    liElement.innerHTML = `
+        <h2>${person[8]}</h2>
+        <h3>${person[11]}</h3>
+    `;
+    ulElement.appendChild(liElement);
+});
+
+appElement.appendChild(ulElement);
